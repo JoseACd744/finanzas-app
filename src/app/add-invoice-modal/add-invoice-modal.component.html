@@ -1,0 +1,75 @@
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column; height: 100%;">
+  <h2 mat-dialog-title>Agregar Factura</h2>
+  <mat-dialog-content>
+    <form [formGroup]="facturaForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Número de Letra/Factura</mat-label>
+        <input matInput formControlName="numeroFactura" required>
+        <mat-error *ngIf="facturaForm.get('numeroFactura')?.hasError('required')">
+          El número de letra/factura es requerido.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre del Cliente</mat-label>
+        <input matInput formControlName="nombreCliente" required>
+        <mat-error *ngIf="facturaForm.get('nombreCliente')?.hasError('required')">
+          El nombre del cliente es requerido.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Monto</mat-label>
+        <input matInput type="number" formControlName="monto" required>
+        <mat-error *ngIf="facturaForm.get('monto')?.hasError('required')">
+          El monto es requerido.
+        </mat-error>
+        <mat-error *ngIf="facturaForm.get('monto')?.hasError('min')">
+          El monto debe ser positivo.
+        </mat-error>
+      </mat-form-field>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Tasa de Interés Efectiva (%)</mat-label>
+          <input matInput type="number" formControlName="tasaInteres" required>
+          <mat-error *ngIf="facturaForm.get('tasaInteres')?.hasError('required')">
+            La tasa de interés es requerida.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Seguro Desgravame (%)</mat-label>
+          <input matInput type="number" formControlName="seguroDesgravame">
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Fecha de Descuento</mat-label>
+          <input matInput [matDatepicker]="descuentoPicker" formControlName="fechaDescuento" required>
+          <mat-datepicker-toggle matSuffix [for]="descuentoPicker"></mat-datepicker-toggle>
+          <mat-datepicker #descuentoPicker></mat-datepicker>
+          <mat-error *ngIf="facturaForm.get('fechaDescuento')?.hasError('required')">
+            La fecha de descuento es requerida.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-column">
+          <mat-label>Fecha de Vencimiento</mat-label>
+          <input matInput [matDatepicker]="vencimientoPicker" formControlName="fechaVencimiento" required>
+          <mat-datepicker-toggle matSuffix [for]="vencimientoPicker"></mat-datepicker-toggle>
+          <mat-datepicker #vencimientoPicker></mat-datepicker>
+          <mat-error *ngIf="facturaForm.get('fechaVencimiento')?.hasError('required')">
+            La fecha de vencimiento es requerida.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="close()">Cancelar</button>
+    <button mat-flat-button color="primary" [disabled]="facturaForm.invalid" (click)="guardar()">Guardar</button>
+  </mat-dialog-actions>
+</div>
