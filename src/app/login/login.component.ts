@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,7 @@ export class LoginComponent {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -31,10 +32,13 @@ export class LoginComponent {
   }
 
   onLogin() {
-    if (this.loginForm.valid) {
-      console.log('Form Value:', this.loginForm.value);
-    } else {
-      console.log('Form is invalid');
-    }
+
+    this.router.navigate(['/history']);
+    // if (this.loginForm.valid) {
+    //   console.log('Form Value:', this.loginForm.value);
+    //   this.router.navigate(['/history']);
+    // } else {
+    //   console.log('Form is invalid');
+    // }
   }
 }

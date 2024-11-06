@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.search {
+  align-items:flex-end;
+  align-self: flex-end;
+  justify-content: flex-end; /* Cambiado a flex-end */
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  width: 300px;
+  margin-right: 10px;
+}
+
+.search-button {
+  width: 100px;
+  align-items: center;
+}
