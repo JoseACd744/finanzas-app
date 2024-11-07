@@ -1,0 +1,12 @@
+.example-container {
+  height: 100vh;
+}
+
+.mat-sidenav {
+  background: #0216f4;
+  color: whitergb(0, 3, 91)
+}
+
+.mat-sidenav-content {
+  padding: 0;
+}
