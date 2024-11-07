@@ -1,1 +1,9 @@
-<router-outlet></router-outlet>
+<mat-sidenav-container class="example-container" style="height: 100vh;">
+  <mat-sidenav #sidenav mode="side" opened>
+    <app-side-navbar></app-side-navbar>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <app-app-toolbar [isSidenavOpen]="isSidenavOpen" (drawerToggle)="toggleSidenav()"></app-app-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

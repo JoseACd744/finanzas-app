@@ -1,0 +1,62 @@
+/* Clase para la ruta activa */
+.active-link {
+    background-color: #1a1a1a; /* Fondo negro */
+    color: #ffffff; /* Texto blanco */
+    border-radius: 8px;
+}
+
+.active-link .list-item-content {
+    color: #ffffff; /* Texto blanco */
+}
+
+/* Mantén el resto de tus estilos */
+.sidenav-content {
+    width: 250px; /* Ajusta el ancho según sea necesario */
+    padding: 10px;
+    font-family: Roboto, sans-serif;
+    background-color: #000000; /* Fondo negro */
+}
+
+.mat-nav-list {
+    margin-bottom: 16px;
+}
+
+.list-item-content {
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    color: #ffffff; /* Texto blanco */
+    flex-grow: 1; /* Asegura que el contenido ocupe el espacio disponible */
+}
+
+.mat-list-item {
+    display: flex;
+    align-items: center;
+    width: 100%; /* Asegura que el item ocupe todo el ancho disponible */
+}
+
+.mat-list-item:hover {  
+    background-color: #333333; /* Fondo gris oscuro */
+}
+
+.counter {
+    color: #ffffff; /* Texto blanco */
+    background-color: #333333; /* Fondo gris oscuro */
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+.mat-icon {
+    margin-right: 8px;
+    color: #ffffff; /* Icono blanco */
+    vertical-align: middle; /* Alinea verticalmente el icono */
+    font-size: 24px; /* Asegura que el tamaño del icono sea consistente */
+}
+
+.mat-divider {
+    margin: 8px 0;
+    border-top-width: 1px;
+    border-color: #444444; /* Color del divisor gris oscuro */
+}
