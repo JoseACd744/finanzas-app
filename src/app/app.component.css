@@ -3,9 +3,8 @@
 }
 
 .mat-sidenav {
-  width: 250px;
-  background: #333;
-  color: white;
+  background: #0216f4;
+  color: whitergb(0, 3, 91)
 }
 
 .mat-sidenav-content {
