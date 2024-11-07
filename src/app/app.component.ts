@@ -5,6 +5,8 @@ import { SideNavbarComponent } from './shared/side-navbar/side-navbar.component'
 import { CommonModule } from '@angular/common';
 import { AppToolbarComponent } from './shared/app-toolbar/app-toolbar.component';
 import { MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
+import { AddInvoiceModalComponent } from './add-invoice-modal/add-invoice-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +18,9 @@ import { MatSidenavContainer, MatSidenavContent } from '@angular/material/sidena
     AppToolbarComponent,
     MatSidenav,
     MatSidenavContainer,
-    MatSidenavContent
+    MatSidenavContent,
+    AddInvoiceModalComponent,
+    MatDialogModule,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
