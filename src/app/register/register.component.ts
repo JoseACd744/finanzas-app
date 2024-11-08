@@ -3,38 +3,50 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
+    CommonModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     ReactiveFormsModule,
-    RouterLink
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
   registerForm: FormGroup;
+  errorMessage: string = '';
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
-      name: ['', Validators.required],
       username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
   }
 
   onRegister() {
     if (this.registerForm.valid) {
-      console.log('Form Value:', this.registerForm.value);
-    } else {
-      console.log('Form is invalid');
+      const { username, password } = this.registerForm.value;
+
+      try {
+        this.authService.register({ username, password });
+        alert('Usuario registrado exitosamente');
+        this.router.navigate(['/login']);
+      } catch (error: any) {
+        this.errorMessage = error.message || 'Error al registrar usuario';
+      }
     }
+  }
+
+  // Método para navegar al login sin validar el formulario
+  navigateToLogin() {
+    this.router.navigate(['/login']);
   }
 }

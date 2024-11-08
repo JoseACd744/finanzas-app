@@ -1,6 +1,11 @@
+<!-- app-toolbar.component.html -->
 <mat-toolbar style="background-color: blue; color: white;">
-    <button mat-icon-button class="example-icon" (click)="onMenuClick()" aria-label="Example icon-button with menu icon">
-      <mat-icon style="color: white;">{{ isSidenavOpen ? 'close' : 'menu' }}</mat-icon>
-    </button>
-    <span>Sale su retiro en fa</span>
-  </mat-toolbar>
+  <button mat-icon-button (click)="onMenuClick()" aria-label="Example icon-button with menu icon">
+    <mat-icon style="color: white;">{{ isSidenavOpen ? 'close' : 'menu' }}</mat-icon>
+  </button>
+  <span>PORTAFOLIO DE LETRAS</span>
+
+  <!-- Botón de cerrar sesión en el lado derecho -->
+  <span class="spacer"></span>
+  <button mat-button (click)="logout()" style="color: white;">Cerrar sesión</button>
+</mat-toolbar>
