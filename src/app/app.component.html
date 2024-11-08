@@ -1,4 +1,5 @@
-<mat-sidenav-container class="example-container" style="height: 100vh;">
+<!-- app.component.html -->
+<mat-sidenav-container class="example-container" style="height: 100vh;" *ngIf="isAuthenticated">
   <mat-sidenav #sidenav mode="side" opened>
     <app-side-navbar></app-side-navbar>
   </mat-sidenav>
@@ -7,3 +8,5 @@
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<router-outlet *ngIf="!isAuthenticated"></router-outlet>

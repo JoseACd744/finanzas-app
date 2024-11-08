@@ -49,9 +49,16 @@ export class AddInvoiceModalComponent {
 
   guardar(): void {
     if (this.facturaForm.valid) {
-      // Lógica para guardar la factura
-      console.log(this.facturaForm.value);
-      this.dialogRef.close(this.facturaForm.value);
+      const nuevaFactura = this.facturaForm.value;
+
+      // Obtener las facturas existentes de LocalStorage
+      const facturas = JSON.parse(localStorage.getItem('facturas') || '[]');
+      facturas.push(nuevaFactura);
+
+      // Guardar la nueva lista de facturas en LocalStorage
+      localStorage.setItem('facturas', JSON.stringify(facturas));
+
+      this.dialogRef.close(nuevaFactura);
     }
   }
 }

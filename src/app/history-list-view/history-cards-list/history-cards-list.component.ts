@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HistoryItemComponent } from '../history-item/history-item.component';
-import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,16 +8,26 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [
     HistoryItemComponent,
-    MatCardModule,
+    MatTableModule,
     CommonModule
   ],
   templateUrl: './history-cards-list.component.html',
   styleUrls: ['./history-cards-list.component.css']
 })
 export class HistoryCardsListComponent {
+  displayedColumns: string[] = [
+    'numeroLetra', 
+    'cliente', 
+    'monto', 
+    'tea', 
+    'tasaDescuento', 
+    'fechaDescuento', 
+    'fechaVencimiento'
+  ];
+
   items = [
     {
-      title: 'Letra #12345',
+      numeroLetra: '12345',
       cliente: 'NombreCliente',
       monto: 'S/ 50000',
       tea: '12.5%',
@@ -26,7 +36,7 @@ export class HistoryCardsListComponent {
       fechaVencimiento: '08/02/2025'
     },
     {
-      title: 'Letra #12346',
+      numeroLetra: '12346',
       cliente: 'NombreCliente2',
       monto: 'S/ 60000',
       tea: '13.0%',
@@ -35,4 +45,9 @@ export class HistoryCardsListComponent {
       fechaVencimiento: '10/03/2025'
     }
   ];
+
+  /*ngOnInit() {
+    // Cargar las facturas desde LocalStorage al iniciar el componente
+    this.items = JSON.parse(localStorage.getItem('facturas') || '[]');
+  }*/
 }

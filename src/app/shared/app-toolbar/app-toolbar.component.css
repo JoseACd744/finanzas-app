@@ -1,6 +1,11 @@
+/* app-toolbar.component.css */
 mat-toolbar {
-    margin: 0;
-    width: 100%;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
