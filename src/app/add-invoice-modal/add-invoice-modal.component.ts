@@ -8,6 +8,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import { LetraService } from '../services/letra.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-add-invoice-modal',
@@ -30,16 +32,24 @@ export class AddInvoiceModalComponent {
 
   constructor(
     public dialogRef: MatDialogRef<AddInvoiceModalComponent>,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private letraService: LetraService,
+    private authService: AuthService
   ) {
     this.facturaForm = this.fb.group({
-      numeroFactura: ['', Validators.required],
+      numero: ['', Validators.required],
       nombreCliente: ['', Validators.required],
       monto: ['', [Validators.required, Validators.min(0)]],
-      tasaInteres: ['', Validators.required],
+      tasaInteresEfectiva: ['', Validators.required],
       seguroDesgravame: [''],
       fechaDescuento: ['', Validators.required],
-      fechaVencimiento: ['', Validators.required]
+      fechaVencimiento: ['', Validators.required],
+      comisionEstudio: [''],
+      comisionActivacion: [''],
+      comisionOtro: [''],
+      retencion: [''],
+      gastosAdministrativos: [''],
+      portes: [''],
     });
   }
 
@@ -50,15 +60,21 @@ export class AddInvoiceModalComponent {
   guardar(): void {
     if (this.facturaForm.valid) {
       const nuevaFactura = this.facturaForm.value;
-
-      // Obtener las facturas existentes de LocalStorage
-      const facturas = JSON.parse(localStorage.getItem('facturas') || '[]');
-      facturas.push(nuevaFactura);
-
-      // Guardar la nueva lista de facturas en LocalStorage
-      localStorage.setItem('facturas', JSON.stringify(facturas));
-
-      this.dialogRef.close(nuevaFactura);
+      const userId = this.authService.getCurrentUserId();
+      if (userId) {
+        nuevaFactura.userId = userId;
+  
+        this.letraService.createLetra(nuevaFactura).subscribe(
+          (response) => {
+            this.dialogRef.close(response);
+          },
+          (error) => {
+            console.error('Error al guardar la factura', error);
+          }
+        );
+      } else {
+        console.error('No se pudo obtener el ID del usuario');
+      }
     }
   }
 }

@@ -27,21 +27,25 @@ export class RegisterComponent {
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      name: ['', Validators.required],
+      email: ['', Validators.required]
     });
   }
 
-  onRegister() {
+    onRegister() {
     if (this.registerForm.valid) {
-      const { username, password } = this.registerForm.value;
-
-      try {
-        this.authService.register({ username, password });
-        alert('Usuario registrado exitosamente');
-        this.router.navigate(['/login']);
-      } catch (error: any) {
-        this.errorMessage = error.message || 'Error al registrar usuario';
-      }
+      const { username, password, name, email } = this.registerForm.value;
+  
+      this.authService.register({ username, password, name, email }).subscribe(
+        () => {
+          alert('Usuario registrado exitosamente');
+          this.router.navigate(['/login']);
+        },
+        error => {
+          this.errorMessage = error.message || 'Error al registrar usuario';
+        }
+      );
     }
   }
 

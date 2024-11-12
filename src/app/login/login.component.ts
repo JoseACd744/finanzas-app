@@ -36,13 +36,19 @@ export class LoginComponent {
   onLogin() {
     if (this.loginForm.valid) {
       const { username, password } = this.loginForm.value;
-
-      if (this.authService.login({ username, password })) {
-        //alert('Inicio de sesión exitoso');
-        this.router.navigate(['/history']);
-      } else {
-        this.errorMessage = 'Usuario o contraseña incorrecta';
-      }
+  
+      this.authService.login({ username, password }).subscribe(
+        success => {
+          if (success) {
+            this.router.navigate(['/history']);
+          } else {
+            this.errorMessage = 'Usuario o contraseña incorrecta';
+          }
+        },
+        error => {
+          this.errorMessage = 'Error al iniciar sesión';
+        }
+      );
     }
   }
 
