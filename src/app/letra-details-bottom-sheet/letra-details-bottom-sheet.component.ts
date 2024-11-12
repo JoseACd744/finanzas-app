@@ -6,6 +6,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 import { MatTabsModule } from '@angular/material/tabs';
+import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-letra-details-bottom-sheet',
@@ -15,12 +17,13 @@ import { MatTabsModule } from '@angular/material/tabs';
   styleUrls: ['./letra-details-bottom-sheet.component.css']
 })
 export class LetraDetailsBottomSheetComponent {
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any) {}
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any, private router: Router, private http: HttpClient) {}
 
   downloadCSV(): void {
     const csvData = this.convertToCSV(this.data);
     const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, 'letra-details.csv');
+    this.addDownloadLog('CSV');
   }
 
   convertToCSV(objArray: any): string {
@@ -62,5 +65,24 @@ export class LetraDetailsBottomSheetComponent {
     doc.text(`Valor Entregado: ${this.data.valorEntregado}`, 10, 110);
     doc.text(`TCEA: ${this.data.TCEA}`, 10, 120);
     doc.save('letra-details.pdf');
+    this.addDownloadLog('PDF');
+  }
+
+  addDownloadLog(format: string): void {
+    const timestamp = new Date().toLocaleString();
+    const log = { format, timestamp, userId: this.data.userId, letraId: this.data.letraId };
+  
+    this.http.post('http://localhost:3000/api/download-log', log).subscribe(
+      response => {
+        console.log('Historial de descargas guardado', response);
+      },
+      error => {
+        console.error('Error al guardar el historial de descargas', error);
+      }
+    );
+  }
+
+  viewDownloadHistory(): void {
+    this.router.navigate(['/download-history']);
   }
 }

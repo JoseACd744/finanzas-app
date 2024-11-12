@@ -1,0 +1,10 @@
+<div class="history-container">
+  <h3 class="title">Historial de Descargas</h3>
+  <mat-divider></mat-divider>
+  <div *ngFor="let log of downloadLogs" class="detail-item">
+    <p><strong>Formato:</strong> {{ log.format }}</p>
+    <p><strong>Fecha y Hora:</strong> {{ log.timestamp }}</p>
+    <p><strong>Nombre de Letra:</strong> {{ log.letraNombre }}</p>
+    <mat-divider></mat-divider>
+  </div>
+</div>

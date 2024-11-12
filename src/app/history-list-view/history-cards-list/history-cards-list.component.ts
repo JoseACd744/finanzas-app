@@ -57,9 +57,23 @@ export class HistoryCardsListComponent implements OnInit {
     }
   }
 
-  openBottomSheet(data: any): void {
+  openBottomSheet(letra: any): void {
     this.bottomSheet.open(LetraDetailsBottomSheetComponent, {
-      data: data
+      data: {
+        letraId: letra.id,
+        userId: letra.userId,
+        numero: letra.numero,
+        nombreCliente: letra.nombreCliente,
+        monto: letra.monto,
+        TEA: letra.TEA,
+        TEP: letra.TEP,
+        tasaDescontada: letra.tasaDescontada,
+        descuento: letra.descuento,
+        valorNeto: letra.valorNeto,
+        valorRecibido: letra.valorRecibido,
+        valorEntregado: letra.valorEntregado,
+        TCEA: letra.TCEA
+      }
     });
   }
 }
