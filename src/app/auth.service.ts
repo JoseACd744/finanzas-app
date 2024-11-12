@@ -2,29 +2,24 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { BaseService } from './services/base.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService extends BaseService {
-  private apiUrl = `${this.baseUrl}users`;
+export class AuthService {
+  private apiUrl = 'http://localhost:3000/api/users';
 
-  constructor(http: HttpClient) {
-    super(http);
-  }
+  constructor(private http: HttpClient) {}
 
-  // Registrar un nuevo usuario
   register(user: { username: string, password: string, name: string, email: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}`, user);
   }
 
-  // Iniciar sesión
   login(user: { username: string, password: string }): Observable<boolean> {
     return this.http.post<{ token: string, userId: number }>(`${this.apiUrl}/login`, user).pipe(
       map(response => {
         if (response.token) {
-          localStorage.setItem('currentUser', JSON.stringify(response));
+          localStorage.setItem('currentUser', JSON.stringify({ token: response.token, userId: response.userId }));
           return true;
         } else {
           return false;
@@ -33,12 +28,10 @@ export class AuthService extends BaseService {
     );
   }
 
-  // Cerrar sesión
   logout() {
     localStorage.removeItem('currentUser');
   }
 
-  // Verificar si el usuario está autenticado
   isAuthenticated(): boolean {
     return localStorage.getItem('currentUser') !== null;
   }

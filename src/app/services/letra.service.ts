@@ -7,7 +7,7 @@ import { Letra } from '../models/letra.model';
   providedIn: 'root'
 })
 export class LetraService {
-  private apiUrl = 'http://localhost:3000/api/letras/'; // Cambia esto a tu URL de API
+  private apiUrl = 'http://localhost:3000/api/letras'; // Cambia esto a tu URL de API
 
   constructor(private http: HttpClient) {}
 
@@ -33,5 +33,13 @@ export class LetraService {
 
   deleteLetra(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+  
+  getLetraCount(userId: number): Observable<number> {
+    let params = new HttpParams();
+    if (userId) {
+      params = params.set('userId', userId.toString());
+    }
+    return this.http.get<number>(`${this.apiUrl}/count`, { params });
   }
 }
