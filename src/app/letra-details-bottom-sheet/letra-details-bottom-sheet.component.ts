@@ -72,7 +72,7 @@ export class LetraDetailsBottomSheetComponent {
     const timestamp = new Date().toLocaleString();
     const log = { format, timestamp, userId: this.data.userId, letraId: this.data.letraId };
   
-    this.http.post('http://localhost:3000/api/download-log', log).subscribe(
+    this.http.post('finanzastf-h0hgfnerg9eca4ba.westus3-01.azurewebsites.net/api/download-log', log).subscribe(
       response => {
         console.log('Historial de descargas guardado', response);
       },
