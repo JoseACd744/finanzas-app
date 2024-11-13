@@ -1,38 +1,79 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HistoryItemComponent } from '../history-item/history-item.component';
-import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
 import { CommonModule } from '@angular/common';
+import { LetraService } from '../../services/letra.service';
+import { AuthService } from '../../auth.service';
+import { LetraDetailsBottomSheetComponent } from '../../letra-details-bottom-sheet/letra-details-bottom-sheet.component';
+import { MatBottomSheet } from '@angular/material/bottom-sheet'; // Importa MatBottomSheet
 
 @Component({
   selector: 'app-history-cards-list',
   standalone: true,
   imports: [
     HistoryItemComponent,
-    MatCardModule,
+    MatTableModule,
     CommonModule
   ],
   templateUrl: './history-cards-list.component.html',
   styleUrls: ['./history-cards-list.component.css']
 })
-export class HistoryCardsListComponent {
-  items = [
-    {
-      title: 'Letra #12345',
-      cliente: 'NombreCliente',
-      monto: 'S/ 50000',
-      tea: '12.5%',
-      tasaDescuento: '12%',
-      fechaDescuento: '08/02/2024',
-      fechaVencimiento: '08/02/2025'
-    },
-    {
-      title: 'Letra #12346',
-      cliente: 'NombreCliente2',
-      monto: 'S/ 60000',
-      tea: '13.0%',
-      tasaDescuento: '11%',
-      fechaDescuento: '10/03/2024',
-      fechaVencimiento: '10/03/2025'
-    }
+export class HistoryCardsListComponent implements OnInit {
+  displayedColumns: string[] = [
+    'numeroLetra', 
+    'cliente', 
+    'monto', 
+    'tea', 
+    'tasaDescuento', 
+    'fechaDescuento', 
+    'fechaVencimiento'
   ];
+
+  items: any[] = [];
+
+  constructor(
+    private letraService: LetraService,
+    private authService: AuthService,
+    private bottomSheet: MatBottomSheet // Inyecta MatBottomSheet
+  ) {}
+
+  ngOnInit(): void {
+    this.loadLetras();
+  }
+
+  loadLetras(): void {
+    const userId = this.authService.getCurrentUserId();
+    if (userId) {
+      this.letraService.getLetras(userId).subscribe(
+        (data) => {
+          this.items = data;
+        },
+        (error) => {
+          console.error('Error al cargar las letras', error);
+        }
+      );
+    } else {
+      console.error('No se pudo obtener el ID del usuario');
+    }
+  }
+
+  openBottomSheet(letra: any): void {
+    this.bottomSheet.open(LetraDetailsBottomSheetComponent, {
+      data: {
+        letraId: letra.id,
+        userId: letra.userId,
+        numero: letra.numero,
+        nombreCliente: letra.nombreCliente,
+        monto: letra.monto,
+        TEA: letra.TEA,
+        TEP: letra.TEP,
+        tasaDescontada: letra.tasaDescontada,
+        descuento: letra.descuento,
+        valorNeto: letra.valorNeto,
+        valorRecibido: letra.valorRecibido,
+        valorEntregado: letra.valorEntregado,
+        TCEA: letra.TCEA
+      }
+    });
+  }
 }

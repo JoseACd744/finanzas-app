@@ -5,8 +5,11 @@ import { SideNavbarComponent } from './shared/side-navbar/side-navbar.component'
 import { CommonModule } from '@angular/common';
 import { AppToolbarComponent } from './shared/app-toolbar/app-toolbar.component';
 import { MatSidenavContainer, MatSidenavContent } from '@angular/material/sidenav';
-import { AddInvoiceModalComponent } from './add-invoice-modal/add-invoice-modal.component';
+import { AddInvoiceComponent } from './add-invoice-modal/add-invoice.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AuthService } from './auth.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-root',
@@ -19,8 +22,10 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSidenav,
     MatSidenavContainer,
     MatSidenavContent,
-    AddInvoiceModalComponent,
     MatDialogModule,
+    HttpClientModule,
+    MatBottomSheetModule,
+    AddInvoiceComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
@@ -31,8 +36,14 @@ export class AppComponent {
   @ViewChild('sidenav') sidenav!: MatSidenav;
   isSidenavOpen = true;
 
+  constructor(private authService: AuthService) {}
+
   toggleSidenav() {
     this.isSidenavOpen = !this.isSidenavOpen;
     this.sidenav.toggle();
+  }
+
+  get isAuthenticated() {
+    return this.authService.isAuthenticated();
   }
 }

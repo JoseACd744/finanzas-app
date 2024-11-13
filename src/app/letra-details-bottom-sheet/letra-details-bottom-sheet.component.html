@@ -1,0 +1,44 @@
+<!-- src/app/components/letra-details-bottom-sheet/letra-details-bottom-sheet.component.html -->
+<mat-nav-list>
+  <h3 class="title">Detalles de la Letra</h3>
+  <mat-divider></mat-divider>
+  <div class="detail-item">
+    <p><strong>Número:</strong> {{ data.numero }}</p>
+  </div>
+  <div class="detail-item">
+    <p><strong>Cliente:</strong> {{ data.nombreCliente }}</p>
+  </div>
+  <div class="detail-item">
+    <p><strong>Monto:</strong> {{ data.monto | currency:'S/':'symbol':'1.2-2' }}</p>
+  </div>
+  <div class="detail-item">
+    <p><strong>TEA:</strong> {{ data.TEA | percent:'1.2-2' }}</p>
+  </div>
+  <div class="detail-item">
+    <p><strong>TEP:</strong> {{ data.TEP | percent:'1.2-2' }}</p>
+  </div>
+  <div class="detail-item">
+    <p><strong>Tasa Descontada:</strong> {{ data.tasaDescontada | percent:'1.2-2' }}</p>
+  </div>
+  <div class="detail-item">
+    <p><strong>Descuento:</strong> {{ data.descuento | currency:'S/':'symbol':'1.2-2' }}</p>
+  </div>
+  <div class="detail-item">
+    <p><strong>Valor Neto:</strong> {{ data.valorNeto | currency:'S/':'symbol':'1.2-2' }}</p>
+  </div>
+  <div class="detail-item">
+    <p><strong>Valor Recibido:</strong> {{ data.valorRecibido | currency:'S/':'symbol':'1.2-2' }}</p>
+  </div>
+  <div class="detail-item">
+    <p><strong>Valor Entregado:</strong> {{ data.valorEntregado | currency:'S/':'symbol':'1.2-2' }}</p>
+  </div>
+  <div class="detail-item">
+    <p><strong>TCEA:</strong> {{ data.TCEA | percent:'1.2-2' }}</p>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="button-container">
+    <button mat-raised-button color="primary" (click)="downloadCSV()">Descargar CSV</button>
+    <button mat-raised-button color="accent" (click)="downloadPDF()">Descargar PDF</button>
+    <button mat-raised-button color="warn" (click)="viewDownloadHistory()">Ver Historial de Descargas</button>
+  </div>
+</mat-nav-list>

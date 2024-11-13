@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -22,10 +21,13 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     MatDialogModule
   ],
-  templateUrl: './add-invoice-modal.component.html',
-  styleUrls: ['./add-invoice-modal.component.css']
+  templateUrl: './add-invoice.component.html',
+  styleUrls: ['./add-invoice.component.css']
 })
 export class AddInvoiceModalComponent {
+cancelar() {
+throw new Error('Method not implemented.');
+}
   facturaForm: FormGroup;
 
   constructor(

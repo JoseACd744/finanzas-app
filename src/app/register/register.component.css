@@ -20,6 +20,10 @@
     letter-spacing: var(--Headline-Large-Tracking, 0px);
 }
 
+.center-text {
+    text-align: center;
+}
+
 .register-items {
     display: flex;
     width: 100%;
@@ -40,7 +44,6 @@
 form {
     display: flex;
     flex-direction: column;
-    align-items: center;
     width: 100%;
     max-width: 339px;
     gap: 16px;

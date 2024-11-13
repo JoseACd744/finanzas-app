@@ -1,11 +1,48 @@
-<div *ngFor="let item of items" class="card">
-  <app-history-item 
-    [title]="item.title" 
-    [cliente]="item.cliente" 
-    [monto]="item.monto" 
-    [tea]="item.tea" 
-    [tasaDescuento]="item.tasaDescuento" 
-    [fechaDescuento]="item.fechaDescuento" 
-    [fechaVencimiento]="item.fechaVencimiento">
-  </app-history-item>
-</div>
+<!-- history-cards-list.component.html -->
+<table mat-table [dataSource]="items" class="mat-elevation-z8">
+
+  <!-- Número de Letra Column -->
+  <ng-container matColumnDef="numeroLetra">
+    <th mat-header-cell *matHeaderCellDef> N° Letra </th>
+    <td mat-cell *matCellDef="let item"> {{ item.numero }} </td>
+  </ng-container>
+
+  <!-- Cliente Column -->
+  <ng-container matColumnDef="cliente">
+    <th mat-header-cell *matHeaderCellDef> Cliente </th>
+    <td mat-cell *matCellDef="let item"> {{ item.nombreCliente }} </td>
+  </ng-container>
+
+  <!-- Monto Column -->
+  <ng-container matColumnDef="monto">
+    <th mat-header-cell *matHeaderCellDef> Monto </th>
+    <td mat-cell *matCellDef="let item"> {{ item.monto }} </td>
+  </ng-container>
+
+  <!-- TEA Column -->
+  <ng-container matColumnDef="tea">
+    <th mat-header-cell *matHeaderCellDef> TEA </th>
+    <td mat-cell *matCellDef="let item"> {{ item.TEA | percent:'1.2-2' }} </td>
+  </ng-container>
+
+  <!-- Tasa de Descuento Column -->
+  <ng-container matColumnDef="tasaDescuento">
+    <th mat-header-cell *matHeaderCellDef> Tasa de Descuento </th>
+    <td mat-cell *matCellDef="let item"> {{ item.tasaDescontada | percent:'1.2-2' }} </td>
+  </ng-container>
+
+  <!-- Fecha de Descuento Column -->
+  <ng-container matColumnDef="fechaDescuento">
+    <th mat-header-cell *matHeaderCellDef> Fecha Descuento </th>
+    <td mat-cell *matCellDef="let item"> {{ item.fechaDescuento | date:'dd-MM-yyyy' }} </td>
+  </ng-container>
+
+  <!-- Fecha de Vencimiento Column -->
+  <ng-container matColumnDef="fechaVencimiento">
+    <th mat-header-cell *matHeaderCellDef> Fecha Vencimiento </th>
+    <td mat-cell *matCellDef="let item"> {{ item.fechaVencimiento | date:'dd-MM-yyyy' }} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openBottomSheet(row)"></tr>
+</table>
