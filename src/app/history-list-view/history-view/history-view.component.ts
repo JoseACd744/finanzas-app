@@ -29,4 +29,14 @@ import { RouterModule } from '@angular/router';
 export class HistoryViewComponent {
   constructor(public dialog: MatDialog) {}
 
+  openDialog(): void {
+    const dialogRef = this.dialog.open(AddInvoiceComponent, {
+      width: '250px',
+      data: {name: 'test'}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 }
