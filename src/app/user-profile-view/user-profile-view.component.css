@@ -25,7 +25,7 @@
   justify-content: center;
   align-items: center;
   font-size: 40px;
-  line-height: 70px; /* Asegura que la letra esté centrada verticalmente */
+  line-height: 80px; /* Asegura que la letra esté centrada verticalmente */
   text-align: center; /* Asegura que la letra esté centrada horizontalmente */
 }
 

@@ -7,7 +7,7 @@ import { Letra } from '../models/letra.model';
   providedIn: 'root'
 })
 export class LetraService {
-  private apiUrl = 'http://finanzastf-h0hgfnerg9eca4ba.westus3-01.azurewebsites.net/api/letras'; // Cambia esto a tu URL de API
+  private apiUrl = 'https://finanzastf-h0hgfnerg9eca4ba.westus3-01.azurewebsites.net/api/letras'; // Cambia esto a tu URL de API
 
   constructor(private http: HttpClient) {}
 
