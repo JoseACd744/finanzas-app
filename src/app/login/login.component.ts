@@ -3,9 +3,11 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,9 @@ import { CommonModule } from '@angular/common';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatIconModule,
     MatLabel,
+    MatSnackBarModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
@@ -24,9 +28,10 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
 
   loginForm: FormGroup;
+  hidePassword = true;
   errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -36,18 +41,35 @@ export class LoginComponent {
   onLogin() {
     if (this.loginForm.valid) {
       const { username, password } = this.loginForm.value;
-
-      if (this.authService.login({ username, password })) {
-        //alert('Inicio de sesión exitoso');
-        this.router.navigate(['/history']);
-      } else {
-        this.errorMessage = 'Usuario o contraseña incorrecta';
-      }
+  
+      this.authService.login({ username, password }).subscribe(
+        success => {
+          if (success) {
+            this.router.navigate(['/history']);
+          } else {
+            this.showError('Usuario o contraseña incorrecta');
+          }
+        },
+        error => {
+          this.showError('Error al iniciar sesión');
+        }
+      );
     }
   }
 
-  // Método para redirigir a Register en la Opción 2
+  togglePasswordVisibility(): void {
+    this.hidePassword = !this.hidePassword;
+  }
+
   navigateToRegister() {
     this.router.navigate(['/register']);
+  }
+
+  private showError(message: string) {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+    });
   }
 }

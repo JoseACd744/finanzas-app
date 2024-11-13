@@ -1,47 +1,46 @@
-// auth.service.ts
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private usersKey = 'registeredUsers';
+  private apiUrl = 'https://finanzastf-h0hgfnerg9eca4ba.westus3-01.azurewebsites.net/api/users';
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  // Registrar un nuevo usuario
-  register(user: { username: string, password: string }) {
-    const users = JSON.parse(localStorage.getItem(this.usersKey) || '[]');
-    const userExists = users.some((u: any) => u.username === user.username);
-
-    if (userExists) {
-      throw new Error('El usuario ya existe');
-    }
-
-    users.push(user);
-    localStorage.setItem(this.usersKey, JSON.stringify(users));
+  register(user: { username: string, password: string, name: string, email: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}`, user);
   }
 
-  // Iniciar sesión
-  login(user: { username: string, password: string }): boolean {
-    const users = JSON.parse(localStorage.getItem(this.usersKey) || '[]');
-    const validUser = users.find((u: any) => u.username === user.username && u.password === user.password);
-
-    if (validUser) {
-      localStorage.setItem('currentUser', JSON.stringify(validUser));
-      return true;
-    } else {
-      return false;
-    }
+  login(user: { username: string, password: string }): Observable<boolean> {
+    return this.http.post<{ token: string, userId: number }>(`${this.apiUrl}/login`, user).pipe(
+      map(response => {
+        if (response.token) {
+          localStorage.setItem('currentUser', JSON.stringify({ token: response.token, userId: response.userId }));
+          return true;
+        } else {
+          return false;
+        }
+      })
+    );
   }
 
-  // Cerrar sesión
   logout() {
     localStorage.removeItem('currentUser');
   }
 
-  // Verificar si el usuario está autenticado
   isAuthenticated(): boolean {
     return localStorage.getItem('currentUser') !== null;
+  }
+
+  getCurrentUserId(): number | null {
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+      return JSON.parse(currentUser).userId;
+    }
+    return null;
   }
 }

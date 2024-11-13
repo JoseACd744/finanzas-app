@@ -4,17 +4,29 @@
     <h2 class="center-text">Registrar Usuario</h2>
     <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
       <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="name" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required type="email">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
         <mat-label>Usuario</mat-label>
         <input matInput formControlName="username" required>
       </mat-form-field>
       
       <mat-form-field appearance="outline">
         <mat-label>Contraseña</mat-label>
-        <input matInput formControlName="password" required type="password">
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" required>
+        <button mat-icon-button matSuffix (click)="togglePasswordVisibility()" type="button">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
       </mat-form-field>
 
       <button mat-flat-button color="primary" type="submit">Registrar</button>
-      <!-- Cambia el routerLink por un (click) para llamar a navigateToLogin -->
       <button mat-button (click)="navigateToLogin()">Volver al Iniciar Sesión</button>
     </form>
     <p *ngIf="errorMessage">{{ errorMessage }}</p>

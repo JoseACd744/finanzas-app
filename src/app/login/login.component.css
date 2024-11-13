@@ -40,7 +40,6 @@
 form {
     display: flex;
     flex-direction: column;
-    align-items: center;
     width: 100%;
     max-width: 339px;
     gap: 16px;
