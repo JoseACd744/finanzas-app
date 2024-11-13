@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { LetraService } from '../services/letra.service';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-add-invoice-modal',
+  selector: 'app-add-invoice',
   standalone: true,
   imports: [
     CommonModule,
@@ -22,19 +22,20 @@ import { AuthService } from '../auth.service';
     MatDatepickerModule,
     MatButtonModule,
     MatIconModule,
-    MatDialogModule
+    MatSnackBarModule
   ],
-  templateUrl: './add-invoice-modal.component.html',
-  styleUrls: ['./add-invoice-modal.component.css']
+  templateUrl: './add-invoice.component.html',
+  styleUrls: ['./add-invoice.component.css']
 })
-export class AddInvoiceModalComponent {
+export class AddInvoiceComponent {
   facturaForm: FormGroup;
 
   constructor(
-    public dialogRef: MatDialogRef<AddInvoiceModalComponent>,
     private fb: FormBuilder,
     private letraService: LetraService,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {
     this.facturaForm = this.fb.group({
       numero: ['', Validators.required],
@@ -63,10 +64,6 @@ export class AddInvoiceModalComponent {
     return null;
   }
 
-  close(): void {
-    this.dialogRef.close();
-  }
-
   guardar(): void {
     if (this.facturaForm.valid) {
       const nuevaFactura = this.facturaForm.value;
@@ -77,14 +74,17 @@ export class AddInvoiceModalComponent {
   
         this.letraService.createLetra(nuevaFactura).subscribe(
           (response) => {
-            this.dialogRef.close(response);
+            this.router.navigate(['/invoices']);
+            this.showSnackBar('Factura guardada exitosamente', 'Cerrar');
           },
           (error) => {
             console.error('Error al guardar la factura', error);
+            this.showSnackBar('Error al guardar la factura', 'Cerrar');
           }
         );
       } else {
         console.error('No se pudo obtener el ID del usuario');
+        this.showSnackBar('No se pudo obtener el ID del usuario', 'Cerrar');
       }
     }
   }
@@ -102,5 +102,17 @@ export class AddInvoiceModalComponent {
     } else {
       return valor / 100;
     }
+  }
+
+  cancelar(): void {
+    this.router.navigate(['/history']);
+  }
+
+  private showSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+    });
   }
 }

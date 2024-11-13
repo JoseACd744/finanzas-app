@@ -5,6 +5,7 @@ import { HistoryViewComponent } from './history-list-view/history-view/history-v
 import { AuthGuard } from './auth.guard';
 import { UserProfileViewComponent } from './user-profile-view/user-profile-view.component';
 import { DownloadHistoryComponent } from './download-history/download-history.component';
+import { AddInvoiceComponent } from './add-invoice-modal/add-invoice.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -12,5 +13,6 @@ export const routes: Routes = [
   { path: 'history', component: HistoryViewComponent, canActivate: [AuthGuard] },
   {path: 'profile', component: UserProfileViewComponent, canActivate: [AuthGuard]},
   { path: 'download-history', component: DownloadHistoryComponent, canActivate: [AuthGuard] },
+  { path: 'add-invoice', component: AddInvoiceComponent, canActivate: [AuthGuard] },
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];

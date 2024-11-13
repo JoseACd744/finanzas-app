@@ -10,7 +10,7 @@
     <button mat-flat-button color="accent" class="search-button">Buscar</button>
   </div>
   <div class="actions">
-    <button mat-raised-button color="primary" (click)="openAddInvoiceModal()">Agregar Factura</button>
+    <a mat-raised-button color="primary" [routerLink]="['/add-invoice']">Agregar Factura</a>
   </div>
   <app-history-cards-list></app-history-cards-list>
 </div>

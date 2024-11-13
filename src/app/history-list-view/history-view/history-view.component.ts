@@ -5,8 +5,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { AddInvoiceModalComponent } from '../../add-invoice-modal/add-invoice-modal.component';
+import { AddInvoiceComponent } from '../../add-invoice-modal/add-invoice.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-history-view',
@@ -18,8 +19,9 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    AddInvoiceModalComponent,
-    MatDialogModule
+    MatDialogModule,
+    AddInvoiceComponent,
+    RouterModule
   ],
   templateUrl: './history-view.component.html',
   styleUrls: ['./history-view.component.css']
@@ -27,10 +29,4 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 export class HistoryViewComponent {
   constructor(public dialog: MatDialog) {}
 
-
-  openAddInvoiceModal(): void {
-    this.dialog.open(AddInvoiceModalComponent, {
-      width: '400px'
-    });
-  }
 }

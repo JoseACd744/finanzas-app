@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,7 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     MatIconModule,
     MatLabel,
+    MatSnackBarModule
   ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
@@ -29,7 +31,7 @@ export class LoginComponent {
   hidePassword = true;
   errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -45,11 +47,11 @@ export class LoginComponent {
           if (success) {
             this.router.navigate(['/history']);
           } else {
-            this.errorMessage = 'Usuario o contraseña incorrecta';
+            this.showError('Usuario o contraseña incorrecta');
           }
         },
         error => {
-          this.errorMessage = 'Error al iniciar sesión';
+          this.showError('Error al iniciar sesión');
         }
       );
     }
@@ -61,5 +63,13 @@ export class LoginComponent {
 
   navigateToRegister() {
     this.router.navigate(['/register']);
+  }
+
+  private showError(message: string) {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+    });
   }
 }

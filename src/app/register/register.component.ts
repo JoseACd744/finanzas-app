@@ -7,18 +7,20 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [
-    CommonModule,  // Importa CommonModule para habilitar *ngIf
+    CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
     MatIconModule,
     MatLabel,
+    MatSnackBarModule
   ],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
@@ -29,7 +31,7 @@ export class RegisterComponent {
   hidePassword = true;
   errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private snackBar: MatSnackBar) {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -47,11 +49,11 @@ export class RegisterComponent {
           if (success) {
             this.router.navigate(['/login']);
           } else {
-            this.errorMessage = 'Error al registrar el usuario';
+            this.showError('Error al registrar el usuario');
           }
         },
         error => {
-          this.errorMessage = 'Error al registrar el usuario';
+          this.showError('Error al registrar el usuario');
         }
       );
     }
@@ -63,5 +65,13 @@ export class RegisterComponent {
 
   navigateToLogin() {
     this.router.navigate(['/login']);
+  }
+
+  private showError(message: string) {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 3000,
+      verticalPosition: 'top',
+      horizontalPosition: 'center',
+    });
   }
 }

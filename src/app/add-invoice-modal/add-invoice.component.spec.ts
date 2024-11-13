@@ -21,10 +21,13 @@ import { CommonModule } from '@angular/common';
     MatIconModule,
     MatDialogModule
   ],
-  templateUrl: './add-invoice-modal.component.html',
-  styleUrls: ['./add-invoice-modal.component.css']
+  templateUrl: './add-invoice.component.html',
+  styleUrls: ['./add-invoice.component.css']
 })
 export class AddInvoiceModalComponent {
+cancelar() {
+throw new Error('Method not implemented.');
+}
   facturaForm: FormGroup;
 
   constructor(
