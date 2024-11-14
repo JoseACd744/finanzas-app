@@ -22,7 +22,8 @@ import { Router } from '@angular/router';
     MatDatepickerModule,
     MatButtonModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatInputModule
   ],
   templateUrl: './add-invoice.component.html',
   styleUrls: ['./add-invoice.component.css']
@@ -40,7 +41,9 @@ export class AddInvoiceComponent {
     this.facturaForm = this.fb.group({
       numero: ['', Validators.required],
       nombreCliente: ['', Validators.required],
+      nombreEntidadFinanciera: ['', Validators.required],
       monto: ['', [Validators.required, Validators.min(0)]],
+      fechaEmision: ['', Validators.required],
       tasaInteresEfectiva: ['', [Validators.required, Validators.min(0)]],
       seguroDesgravame: ['', [Validators.min(0), Validators.max(2)]],
       fechaDescuento: ['', Validators.required],
@@ -92,6 +95,7 @@ export class AddInvoiceComponent {
   convertirTasas(factura: any): void {
     factura.tasaInteresEfectiva = this.convertirATasa(factura.tasaInteresEfectiva);
     factura.seguroDesgravame = this.convertirATasa(factura.seguroDesgravame);
+    factura.retencion = this.convertirATasa(factura.retencion);
   }
 
   convertirATasa(valor: any): number {
