@@ -17,8 +17,9 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./letra-details-bottom-sheet.component.css']
 })
 export class LetraDetailsBottomSheetComponent {
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any, private router: Router, private http: HttpClient) {}
-
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: any, private router: Router, private http: HttpClient) {
+    console.log(data); // Verifica que los datos contengan las propiedades correctas
+  }
   downloadCSV(): void {
     const csvData = this.convertToCSV(this.data);
     const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
@@ -55,7 +56,7 @@ export class LetraDetailsBottomSheetComponent {
     doc.text('Detalles de la Letra', 10, 10);
     doc.text(`Número: ${this.data.numero}`, 10, 20);
     doc.text(`Cliente: ${this.data.nombreCliente}`, 10, 30);
-    doc.text(`Entidad Financiera: ${this.data.nombreEntidadFinanciera}`, 10, 40);
+    doc.text(`Entidad Financiera: ${this.data.nombreEntidad}`, 10, 40); // Actualizado
     doc.text(`Monto: ${this.data.monto}`, 10, 50);
     doc.text(`Fecha de Emisión: ${this.data.fechaEmision}`, 10, 60);
     doc.text(`TEA: ${this.data.TEA}`, 10, 70);
