@@ -9,7 +9,13 @@
     <p><strong>Cliente:</strong> {{ data.nombreCliente }}</p>
   </div>
   <div class="detail-item">
+    <p><strong>Entidad Financiera:</strong> {{ data.nombreEntidadFinanciera }}</p>
+  </div>
+  <div class="detail-item">
     <p><strong>Monto:</strong> {{ data.monto | currency:'S/':'symbol':'1.2-2' }}</p>
+  </div>
+  <div class="detail-item">
+    <p><strong>Fecha de Emisión:</strong> {{ data.fechaEmision | date:'dd-MM-yyyy' }}</p>
   </div>
   <div class="detail-item">
     <p><strong>TEA:</strong> {{ data.TEA | percent:'1.2-2' }}</p>

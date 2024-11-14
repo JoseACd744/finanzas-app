@@ -55,15 +55,17 @@ export class LetraDetailsBottomSheetComponent {
     doc.text('Detalles de la Letra', 10, 10);
     doc.text(`Número: ${this.data.numero}`, 10, 20);
     doc.text(`Cliente: ${this.data.nombreCliente}`, 10, 30);
-    doc.text(`Monto: ${this.data.monto}`, 10, 40);
-    doc.text(`TEA: ${this.data.TEA}`, 10, 50);
-    doc.text(`TEP: ${this.data.TEP}`, 10, 60);
-    doc.text(`Tasa Descontada: ${this.data.tasaDescontada}`, 10, 70);
-    doc.text(`Descuento: ${this.data.descuento}`, 10, 80);
-    doc.text(`Valor Neto: ${this.data.valorNeto}`, 10, 90);
-    doc.text(`Valor Recibido: ${this.data.valorRecibido}`, 10, 100);
-    doc.text(`Valor Entregado: ${this.data.valorEntregado}`, 10, 110);
-    doc.text(`TCEA: ${this.data.TCEA}`, 10, 120);
+    doc.text(`Entidad Financiera: ${this.data.nombreEntidadFinanciera}`, 10, 40);
+    doc.text(`Monto: ${this.data.monto}`, 10, 50);
+    doc.text(`Fecha de Emisión: ${this.data.fechaEmision}`, 10, 60);
+    doc.text(`TEA: ${this.data.TEA}`, 10, 70);
+    doc.text(`TEP: ${this.data.TEP}`, 10, 80);
+    doc.text(`Tasa Descontada: ${this.data.tasaDescontada}`, 10, 90);
+    doc.text(`Descuento: ${this.data.descuento}`, 10, 100);
+    doc.text(`Valor Neto: ${this.data.valorNeto}`, 10, 110);
+    doc.text(`Valor Recibido: ${this.data.valorRecibido}`, 10, 120);
+    doc.text(`Valor Entregado: ${this.data.valorEntregado}`, 10, 130);
+    doc.text(`TCEA: ${this.data.TCEA}`, 10, 140);
     doc.save('letra-details.pdf');
     this.addDownloadLog('PDF');
   }

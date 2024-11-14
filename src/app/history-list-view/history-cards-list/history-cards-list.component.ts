@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { LetraService } from '../../services/letra.service';
 import { AuthService } from '../../auth.service';
 import { LetraDetailsBottomSheetComponent } from '../../letra-details-bottom-sheet/letra-details-bottom-sheet.component';
-import { MatBottomSheet } from '@angular/material/bottom-sheet'; // Importa MatBottomSheet
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-history-cards-list',
@@ -22,7 +22,9 @@ export class HistoryCardsListComponent implements OnInit {
   displayedColumns: string[] = [
     'numeroLetra', 
     'cliente', 
+    'nombreEntidadFinanciera',
     'monto', 
+    'fechaEmision',
     'tea', 
     'tasaDescuento', 
     'fechaDescuento', 
@@ -34,7 +36,7 @@ export class HistoryCardsListComponent implements OnInit {
   constructor(
     private letraService: LetraService,
     private authService: AuthService,
-    private bottomSheet: MatBottomSheet // Inyecta MatBottomSheet
+    private bottomSheet: MatBottomSheet
   ) {}
 
   ngOnInit(): void {
@@ -64,7 +66,9 @@ export class HistoryCardsListComponent implements OnInit {
         userId: letra.userId,
         numero: letra.numero,
         nombreCliente: letra.nombreCliente,
+        nombreEntidadFinanciera: letra.nombreEntidadFinanciera,
         monto: letra.monto,
+        fechaEmision: letra.fechaEmision,
         TEA: letra.TEA,
         TEP: letra.TEP,
         tasaDescontada: letra.tasaDescontada,

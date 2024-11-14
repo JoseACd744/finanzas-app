@@ -13,10 +13,22 @@
     <td mat-cell *matCellDef="let item"> {{ item.nombreCliente }} </td>
   </ng-container>
 
+  <!-- Nombre de la Entidad Financiera Column -->
+  <ng-container matColumnDef="nombreEntidadFinanciera">
+    <th mat-header-cell *matHeaderCellDef> Entidad Financiera </th>
+    <td mat-cell *matCellDef="let item"> {{ item.nombreEntidadFinanciera }} </td>
+  </ng-container>
+
   <!-- Monto Column -->
   <ng-container matColumnDef="monto">
     <th mat-header-cell *matHeaderCellDef> Monto </th>
     <td mat-cell *matCellDef="let item"> {{ item.monto }} </td>
+  </ng-container>
+
+  <!-- Fecha de Emisión Column -->
+  <ng-container matColumnDef="fechaEmision">
+    <th mat-header-cell *matHeaderCellDef> Fecha Emisión </th>
+    <td mat-cell *matCellDef="let item"> {{ item.fechaEmision | date:'dd-MM-yyyy' }} </td>
   </ng-container>
 
   <!-- TEA Column -->
