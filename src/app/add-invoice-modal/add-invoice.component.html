@@ -21,6 +21,14 @@
 
     <div class="form-row">
       <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Nombre de la Entidad Financiera</mat-label>
+        <input matInput formControlName="nombreEntidadFinanciera" required>
+        <mat-error *ngIf="facturaForm.get('nombreEntidadFinanciera')?.hasError('required')">
+          El nombre de la entidad financiera es requerido.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half-width">
         <mat-label>Monto</mat-label>
         <input matInput type="number" formControlName="monto" required>
         <mat-error *ngIf="facturaForm.get('monto')?.hasError('required')">
@@ -28,6 +36,18 @@
         </mat-error>
         <mat-error *ngIf="facturaForm.get('monto')?.hasError('min')">
           El monto debe ser positivo.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="half-width">
+        <mat-label>Fecha de Emisión</mat-label>
+        <input matInput [matDatepicker]="emisionPicker" formControlName="fechaEmision" required>
+        <mat-datepicker-toggle matSuffix [for]="emisionPicker"></mat-datepicker-toggle>
+        <mat-datepicker #emisionPicker></mat-datepicker>
+        <mat-error *ngIf="facturaForm.get('fechaEmision')?.hasError('required')">
+          La fecha de emisión es requerida.
         </mat-error>
       </mat-form-field>
 
@@ -88,7 +108,7 @@
 
     <div class="form-row">
       <mat-form-field appearance="outline" class="half-width">
-        <mat-label>Retención</mat-label>
+        <mat-label>Retención (%) </mat-label>
         <input matInput type="number" formControlName="retencion">
       </mat-form-field>
 
