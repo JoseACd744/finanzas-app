@@ -42,15 +42,15 @@ export class AddInvoiceComponent {
       nombreCliente: ['', Validators.required],
       nombreEntidad: ['', Validators.required],
       monto: [0, [Validators.required, Validators.min(0)]],
-      tasaInteresEfectiva: [0, Validators.required],
-      seguroDesgravame: [0],
+      tasaInteresEfectiva: [0, [Validators.required, Validators.min(0), Validators.max(30)]],
+      seguroDesgravame: [0, [Validators.required, Validators.min(0), Validators.max(2)]],
       fechaDescuento: ['', Validators.required],
       fechaVencimiento: ['', Validators.required],
       fechaInicio: ['', Validators.required],
       comisionEstudio: [0],
       comisionActivacion: [0],
       comisionOtro: [0],
-      retencion: [0],
+      retencion: [0, [Validators.required, Validators.min(0), Validators.max(50)]],
       gastosAdministrativos: [0],
       portes: [0]
     }, { validators: this.dateRangeValidator });
@@ -74,16 +74,16 @@ export class AddInvoiceComponent {
       if (userId) {
         nuevaFactura.userId = userId;
 
-        this.letraService.createLetra(nuevaFactura).subscribe(
-          (response) => {
-            this.router.navigate(['/invoices']);
+        this.letraService.createLetra(nuevaFactura).subscribe({
+          next: () => {
+            this.router.navigate(['/history']);
             this.showSnackBar('Factura guardada exitosamente', 'Cerrar');
           },
-          (error) => {
+          error: (error) => {
             console.error('Error al guardar la factura', error);
             this.showSnackBar('Error al guardar la factura', 'Cerrar');
           }
-        );
+        });
       } else {
         console.error('No se pudo obtener el ID del usuario');
         this.showSnackBar('No se pudo obtener el ID del usuario', 'Cerrar');
@@ -92,11 +92,22 @@ export class AddInvoiceComponent {
   }
 
   convertirTasas(factura: any): void {
-    // Implementa la lógica de conversión de tasas aquí
+    factura.tasaInteresEfectiva = this.convertirATasa(factura.tasaInteresEfectiva);
+    factura.seguroDesgravame = this.convertirATasa(factura.seguroDesgravame);
+    factura.retencion = this.convertirATasa(factura.retencion);
+  }
+  convertirATasa(valor: any): number {
+    if (typeof valor === 'string' && valor.includes('%')) {
+      return parseFloat(valor.replace('%', '')) / 100;
+    } else if (typeof valor === 'number' && valor > 0 && valor < 1) {
+      return valor;
+    } else {
+      return valor / 100;
+    }
   }
 
   cancelar(): void {
-    this.router.navigate(['/invoices']);
+    this.router.navigate(['/history']);
   }
 
   private showSnackBar(message: string, action: string) {
