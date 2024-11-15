@@ -10,7 +10,6 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { LetraService } from '../services/letra.service';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-add-invoice',
   standalone: true,
@@ -41,19 +40,19 @@ export class AddInvoiceComponent {
     this.facturaForm = this.fb.group({
       numero: ['', Validators.required],
       nombreCliente: ['', Validators.required],
-      nombreEntidadFinanciera: ['', Validators.required],
-      monto: ['', [Validators.required, Validators.min(0)]],
-      fechaEmision: ['', Validators.required],
-      tasaInteresEfectiva: ['', [Validators.required, Validators.min(0)]],
-      seguroDesgravame: ['', [Validators.min(0), Validators.max(2)]],
+      nombreEntidad: ['', Validators.required],
+      monto: [0, [Validators.required, Validators.min(0)]],
+      tasaInteresEfectiva: [0, Validators.required],
+      seguroDesgravame: [0],
       fechaDescuento: ['', Validators.required],
       fechaVencimiento: ['', Validators.required],
-      comisionEstudio: ['', Validators.min(0)],
-      comisionActivacion: ['', Validators.min(0)],
-      comisionOtro: ['', Validators.min(0)],
-      retencion: ['', Validators.min(0)],
-      gastosAdministrativos: ['', Validators.min(0)],
-      portes: ['', Validators.min(0)]
+      fechaInicio: ['', Validators.required],
+      comisionEstudio: [0],
+      comisionActivacion: [0],
+      comisionOtro: [0],
+      retencion: [0],
+      gastosAdministrativos: [0],
+      portes: [0]
     }, { validators: this.dateRangeValidator });
   }
 
@@ -74,7 +73,7 @@ export class AddInvoiceComponent {
       const userId = this.authService.getCurrentUserId();
       if (userId) {
         nuevaFactura.userId = userId;
-  
+
         this.letraService.createLetra(nuevaFactura).subscribe(
           (response) => {
             this.router.navigate(['/invoices']);
@@ -93,30 +92,16 @@ export class AddInvoiceComponent {
   }
 
   convertirTasas(factura: any): void {
-    factura.tasaInteresEfectiva = this.convertirATasa(factura.tasaInteresEfectiva);
-    factura.seguroDesgravame = this.convertirATasa(factura.seguroDesgravame);
-    factura.retencion = this.convertirATasa(factura.retencion);
-  }
-
-  convertirATasa(valor: any): number {
-    if (typeof valor === 'string' && valor.includes('%')) {
-      return parseFloat(valor.replace('%', '')) / 100;
-    } else if (typeof valor === 'number' && valor > 0 && valor < 1) {
-      return valor;
-    } else {
-      return valor / 100;
-    }
+    // Implementa la lógica de conversión de tasas aquí
   }
 
   cancelar(): void {
-    this.router.navigate(['/history']);
+    this.router.navigate(['/invoices']);
   }
 
   private showSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 3000,
-      verticalPosition: 'top',
-      horizontalPosition: 'center',
     });
   }
 }

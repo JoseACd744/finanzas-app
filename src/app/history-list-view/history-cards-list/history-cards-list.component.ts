@@ -66,9 +66,9 @@ export class HistoryCardsListComponent implements OnInit {
         userId: letra.userId,
         numero: letra.numero,
         nombreCliente: letra.nombreCliente,
-        nombreEntidadFinanciera: letra.nombreEntidad, // Asegúrate de que esta propiedad esté correcta
+        nombreEntidad: letra.nombreEntidad, // Asegúrate de que esta propiedad esté correcta
         monto: letra.monto,
-        fechaEmision: letra.fechaInicio, // Asegúrate de que esta propiedad esté correcta
+        fechaInicio: letra.fechaInicio, // Asegúrate de que esta propiedad esté correcta
         TEA: letra.TEA,
         TEP: letra.TEP,
         tasaDescontada: letra.tasaDescontada,
