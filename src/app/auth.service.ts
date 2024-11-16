@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,12 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return localStorage.getItem('currentUser') !== null;
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+      const token = JSON.parse(currentUser).token;
+      return this.isTokenValid(token);
+    }
+    return false;
   }
 
   getCurrentUserId(): number | null {
@@ -42,5 +48,15 @@ export class AuthService {
       return JSON.parse(currentUser).userId;
     }
     return null;
+  }
+
+  private isTokenValid(token: string): boolean {
+    try {
+      const decodedToken: any = jwtDecode(token);
+      const currentTime = Math.floor(Date.now() / 1000);
+      return decodedToken.exp > currentTime;
+    } catch (error) {
+      return false;
+    }
   }
 }

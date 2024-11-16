@@ -14,5 +14,6 @@ export const routes: Routes = [
   {path: 'profile', component: UserProfileViewComponent, canActivate: [AuthGuard]},
   { path: 'download-history', component: DownloadHistoryComponent, canActivate: [AuthGuard] },
   { path: 'add-invoice', component: AddInvoiceComponent, canActivate: [AuthGuard] },
+  {path: '/**', redirectTo: '/login'},
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
