@@ -10,6 +10,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { LetraService } from '../services/letra.service';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-add-invoice',
   standalone: true,
@@ -47,12 +48,12 @@ export class AddInvoiceComponent {
       fechaDescuento: ['', Validators.required],
       fechaVencimiento: ['', Validators.required],
       fechaInicio: ['', Validators.required],
-      comisionEstudio: [0],
-      comisionActivacion: [0],
-      comisionOtro: [0],
+      comisionEstudio: [0, [Validators.min(0)]],
+      comisionActivacion: [0, [Validators.min(0)]],
+      comisionOtro: [0, [Validators.min(0)]],
       retencion: [0, [Validators.required, Validators.min(0), Validators.max(50)]],
-      gastosAdministrativos: [0],
-      portes: [0]
+      gastosAdministrativos: [0, [Validators.min(0)]],
+      portes: [0, [Validators.min(0)]]
     }, { validators: this.dateRangeValidator });
   }
 
@@ -96,6 +97,7 @@ export class AddInvoiceComponent {
     factura.seguroDesgravame = this.convertirATasa(factura.seguroDesgravame);
     factura.retencion = this.convertirATasa(factura.retencion);
   }
+
   convertirATasa(valor: any): number {
     if (typeof valor === 'string' && valor.includes('%')) {
       return parseFloat(valor.replace('%', '')) / 100;
