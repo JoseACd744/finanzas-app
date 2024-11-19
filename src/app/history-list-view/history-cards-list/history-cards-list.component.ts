@@ -76,7 +76,7 @@ export class HistoryCardsListComponent implements OnInit {
         valorNeto: letra.valorNeto,
         valorRecibido: letra.valorRecibido,
         valorEntregado: letra.valorEntregado,
-        TCEA: letra.TCEA * 100
+        TCEA: letra.TCEA
       }
     });
   }
