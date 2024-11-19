@@ -54,17 +54,7 @@ export class AddInvoiceComponent {
       retencion: [0, [Validators.required, Validators.min(0), Validators.max(50)]],
       gastosAdministrativos: [0, [Validators.min(0)]],
       portes: [0, [Validators.min(0)]]
-    }, { validators: this.dateRangeValidator });
-  }
-
-  dateRangeValidator(group: FormGroup): { [key: string]: any } | null {
-    const fechaDescuento = group.get('fechaDescuento')?.value;
-    const fechaVencimiento = group.get('fechaVencimiento')?.value;
-    if (fechaDescuento && fechaVencimiento) {
-      const diffInYears = (new Date(fechaVencimiento).getFullYear() - new Date(fechaDescuento).getFullYear());
-      return diffInYears <= 10 ? null : { 'dateRangeInvalid': true };
-    }
-    return null;
+    });
   }
 
   guardar(): void {
