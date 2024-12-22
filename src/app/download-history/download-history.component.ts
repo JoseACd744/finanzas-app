@@ -25,7 +25,7 @@ export class DownloadHistoryComponent implements OnInit {
   loadDownloadLogs(): void {
     const userId = this.authService.getCurrentUserId();
     if (userId) {
-      this.http.get<any[]>(`https://finanzastf-h0hgfnerg9eca4ba.westus3-01.azurewebsites.net/api/download-log/user/${userId}`).subscribe(
+      this.http.get<any[]>(`https://prod-fullstack-hfckgufbhdccgecd.eastus2-01.azurewebsites.net/api/download-log/user/${userId}`).subscribe(
         logs => {
           this.downloadLogs = logs;
           this.loadLetraDetails();

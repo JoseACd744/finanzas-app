@@ -8,7 +8,7 @@ import {jwtDecode} from 'jwt-decode';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://finanzastf-h0hgfnerg9eca4ba.westus3-01.azurewebsites.net/api/users';
+  private apiUrl = 'https://prod-fullstack-hfckgufbhdccgecd.eastus2-01.azurewebsites.net/api/users';
 
   constructor(private http: HttpClient) {}
 

@@ -21,7 +21,7 @@ export class UserProfileViewComponent implements OnInit {
   ngOnInit(): void {
     const userId = this.authService.getCurrentUserId();
     if (userId) {
-      this.http.get(`https://finanzastf-h0hgfnerg9eca4ba.westus3-01.azurewebsites.net/api/users/${userId}`).subscribe((data: any) => {
+      this.http.get(`https://prod-fullstack-hfckgufbhdccgecd.eastus2-01.azurewebsites.net/api/users/${userId}`).subscribe((data: any) => {
         this.user = data;
       });
 
